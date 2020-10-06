@@ -1,0 +1,58 @@
+/*Given the root of a binary tree, return the inorder traversal of its nodes' values.
+//二叉树中序遍历的栈表达//
+来源：力扣（LeetCode）
+链接：https://leetcode-cn.com/problems/binary-tree-inorder-traversal
+著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。*/
+
+Java.version1:
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public List<Integer> inorderTraversal(TreeNode root) {
+        List<Integer> res = new ArrayList<>();
+        Deque<TreeNode> stack = new LinkedList<>();
+        TreeNode cur = root;
+        while(cur!=null||!stack.isEmpty()){     
+            //这里确保！stack.isEmpty()实际上是为了确保有两个字节点都是null的情况//
+            if(cur!=null){
+                stack.push(cur);
+                cur = cur.left;
+            }
+            else{
+                cur = stack.pop();
+                res.add(cur.val);
+                cur = cur.right;
+            }
+        }
+        return res;
+    }
+}
+class Solution2 {
+    public List<Integer> inorderTraversal(TreeNode root) {
+        List<Integer> res = new ArrayList<>();
+        search(root,res);
+        return res;
+
+    }
+    public void search(TreeNode root, List<Integer> res){
+        if(root == null){
+            return;
+        }
+        search(root.left,res);
+        res.add(root.val);
+        search(root.right,res);
+    }
+}
