@@ -206,12 +206,66 @@ where str1 in ('ABC','aBC','abc','山田');*/
 -- 大小写转换
 
 
+/*
+revoke alter table on dep
+from XX
+
+revoke alter table on worker
+from XX
+*/
+
+create view View_dep
+as
+select * from
+dep;
+
+/*1）用户王明对两个表具有select权限。
+
+Grant select on 职工，部门 to 王明
+grant select on view_dep to 王明;
+
+（2）用户李勇对两个表有insert和delete权限。
+
+Grant insert,delete on 职工，部门 to 李勇
+
+（3）每个职工只对自己的纪录有select权限。
+
+Grant select on 职工 with user()=name to all;
+
+
+（4）用户刘星对职工表有select权限，对工资字段具有更新权限。
+
+Grant select,update(工资) on 职工 to 刘星
+
+（5）用户张新具有修改这两个表的结构的权限。
+
+Grant alter table on 职工,部门 to 张新;
+with grant option;
+
+（6）用户周平具有对两个表的所有权限（读、插、改、删数据），并具有给其他用户授权的权限。
+
+Grant all privileges on 职工,部门 to 周平 with grant option;
+
+revoke all privileges on dep
+from 周平;
+
+
+（7）用户杨兰具有从每个部门职工中select最高工资、最低工资、平均工资的权限，他不能查看每个人的工资。
+
+Create view 部门工资 as
+
+     Select 部门,名称,max(工资),min(工资),avg(工资)
+
+     from 职工,部门 where 职工.部门号=部门.部门号
+
+     Group by 职工,部门号
+
+Grant select  on 部门工资 to 杨兰;
 
 
 
 
-
-
+*/
 
 
 
