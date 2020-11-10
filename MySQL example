@@ -268,6 +268,18 @@ Grant select  on 部门工资 to 杨兰;
 */
 
 
+create table 职工
+(职工号 char(10) not null primary key,
+姓名 char(10) not null,
+年龄 int not null,
+职务 char(20) not null,
+部门号 smallint not null,
+foreign key 职工(部门号) references 部门(部门号),
+constraint C1 check(年龄 <= 60)
+);
+
+
+
 
 
 
